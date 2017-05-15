@@ -42,5 +42,7 @@ class Comment
 		{
 			return self::get(new \ReflectionClass($source));
 		}
+		
+		throw new \Exception('Unexpected object type');
 	}
 }

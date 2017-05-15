@@ -2,27 +2,6 @@
 namespace Annotation;
 
 
-/** Hello world */
-function CommentTest_Func()
-{
-	
-}
-
-
-/** Comment on class a */
-class CommentTest_HelpClass
-{
-	/** @var Comment on property */
-	public $c;
-	
-	/** Comment on method a */
-	public function a() {}
-	
-	/** Comment on static method b */
-	public static function b() {}
-}
-
-
 class CommentTest extends \PHPUnit\Framework\TestCase 
 {
 	const FUNC_COMMENT = '/** Hello world */';
@@ -99,5 +78,35 @@ class CommentTest extends \PHPUnit\Framework\TestCase
 	public function test_get_ByPropertyReflection()
 	{
 		self::assertEquals(self::PROPERTY_COMMENT, Comment::get(new \ReflectionProperty('\Annotation\CommentTest_HelpClass', 'c')));
+	}
+	
+	/**
+	 * @expectedException \Exception
+	 */
+	public function test_get_InvalidObject_ErrorThrown()
+	{
+		Comment::get('a');
+	}
+}
+
+{
+	/** Hello world */
+	function CommentTest_Func()
+	{
+		
+	}
+	
+	
+	/** Comment on class a */
+	class CommentTest_HelpClass
+	{
+		/** @var Comment on property */
+		public $c;
+		
+		/** Comment on method a */
+		public function a() {}
+		
+		/** Comment on static method b */
+		public static function b() {}
 	}
 }
