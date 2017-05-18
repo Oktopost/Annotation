@@ -14,6 +14,27 @@ class Value
 		$this->default = $default;
 	}
 	
+	/**
+	 * @param $element
+	 * @param $name
+	 * @return string|bool
+	 */
+	private static function getMatch($element, $name)
+	{
+		$comment = Comment::get($element);
+		
+		$regex = '/^[ \t]*(\/\*\*|\*)[ \t\*]*@' . $name . '([ \t]+.*|[ \t]*)$/mi';
+		
+		$match = preg_match($regex, $comment, $matches);
+		
+		if (!$match || !is_array($matches) || !isset($matches[2]))
+		{
+			return false;
+		}
+		
+		return $matches[2];
+	}
+	
 	
 	/**
 	 * @param mixed $element
@@ -21,7 +42,7 @@ class Value
 	 */
 	public function get($element)
 	{
-		throw new \Exception();
+		return Value::getValue($element, $this->name, $this->default);
 	}
 	
 	/**
@@ -30,7 +51,7 @@ class Value
 	 */
 	public function has($element): bool
 	{
-		return Flag::hasFlag($element, $this->name);
+		return self::getMatch($element, $this->name);
 	}
 	
 	/**
@@ -38,7 +59,7 @@ class Value
 	 */
 	public function setDefault(string $default) 
 	{
-		throw new \Exception();
+		$this->default = $default;
 	}
 	
 	
@@ -49,6 +70,7 @@ class Value
 	 */
 	public static function getValue($element, $name, $default = null)
 	{
-		throw new \Exception();
+		$result = self::getMatch($element, $name);
+		return $result ? trim($result) : $default;
 	}
 }

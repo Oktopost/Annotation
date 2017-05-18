@@ -20,7 +20,7 @@ class FlagTest extends \PHPUnit\Framework\TestCase
 	/**
 	 * @otherflag
 	 */
-	public function test_hasFlag_NoRequestedFalg_ReturnFalse() 
+	public function test_hasFlag_NoRequestedFlag_ReturnFalse() 
 	{
 		self::assertFalse(Flag::hasFlag([FlagTest::class, __FUNCTION__], 'test'));
 	}
@@ -146,7 +146,7 @@ class FlagTest extends \PHPUnit\Framework\TestCase
 	 * @invalid @flag
 	 * @invalid@flagB
 	 */
-	public function test_hasFlag_AferAnotherAnnotation_ReturnFalse() 
+	public function test_hasFlag_AfterAnotherAnnotation_ReturnFalse() 
 	{
 		self::assertFalse(Flag::hasFlag([FlagTest::class, __FUNCTION__], 'flag'));
 		self::assertFalse(Flag::hasFlag([FlagTest::class, __FUNCTION__], 'flagB'));
