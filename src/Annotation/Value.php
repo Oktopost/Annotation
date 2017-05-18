@@ -49,9 +49,18 @@ class Value
 	 * @param mixed $element
 	 * @return bool
 	 */
-	public function has($element): bool
+	public function exists($element): bool
 	{
-		return self::getMatch($element, $this->name);
+		return Flag::hasFlag($element, $this->name);
+	}
+	
+	/**
+	 * @param mixed $element
+	 * @return bool
+	 */
+	public function isEmpty($element): bool
+	{
+		return !self::getMatch($element, $this->name);
 	}
 	
 	/**

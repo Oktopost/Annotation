@@ -5,17 +5,46 @@ namespace Annotation;
 class ValueTest extends \PHPUnit\Framework\TestCase 
 {
 	/**
-	 * @flag				string
+	 * @flag string
 	 */
-	public function test_get_Return_Value()
+	public function test_get_AnnotationWithValue_ReturnValue()
 	{
 		$value = new Value('flag');
 		self::assertEquals('string', $value->get([ValueTest::class, __FUNCTION__]));
 	}
+	
+	/**
+	 * @flag   		 string		 	
+	 */
+	public function test_get_AnnotationWithValue_ReturnTrimmedValue()
+	{
+		$value = new Value('flag');
+		self::assertEquals('string', $value->get([ValueTest::class, __FUNCTION__]));
+	}
+	
+	/**
+	 * @flag   		 string
+	 *string string string
+	 */
+	public function test_get_MultipleLineAnnotationWithValue_ReturnTrimmedValueOfFirstString()
+	{
+		$value = new Value('flag');
+		self::assertEquals('string', $value->get([ValueTest::class, __FUNCTION__]));
+	}
+	
+	/**
+	 *@flag string
+	 */
+	public function test_get_AnnotationWithoutSpacesAndWithValue_ReturnValue()
+	{
+		$value = new Value('flag');
+		self::assertEquals('string', $value->get([ValueTest::class, __FUNCTION__]));
+	}
+	
 	/**
 	 * @flag
 	 */
-	public function test_get_Return_Default()
+	public function test_get_EmptyAnnotation_ReturnDefault()
 	{
 		$value = new Value('flag', 'string');
 		self::assertEquals('string', $value->get([ValueTest::class, __FUNCTION__]));
@@ -24,7 +53,7 @@ class ValueTest extends \PHPUnit\Framework\TestCase
 	/**
 	 * @flag
 	 */
-	public function test_get_After_setDefault_Return_Default()
+	public function test_setDefault()
 	{
 		$value = new Value('flag', 'something');
 		$value->setDefault('string');
@@ -32,24 +61,33 @@ class ValueTest extends \PHPUnit\Framework\TestCase
 	}
 	
 	/**
-	 * @flag okay
+	 * @flag
 	 */
-	public function test_has_return_true()
+	public function test_Exists_WithAnnotation_ReturnTrue()
 	{
 		$value = new Value('flag');
-		self::assertTrue($value->has([ValueTest::class, __FUNCTION__]));
+		self::assertTrue($value->exists([ValueTest::class, __FUNCTION__]));
 	}
 	
-	public function test_has_return_false()
+	public function test_Exists_WithoutAnnotation_ReturnFalse()
 	{
 		$value = new Value('flag');
-		self::assertFalse($value->has([ValueTest::class, __FUNCTION__]));		
+		self::assertFalse($value->exists([ValueTest::class, __FUNCTION__]));
+	}
+	
+	/**
+	 * @value
+	 */
+	public function test_isEmpty_EmptyAnnotation_ReturnTrue()
+	{
+		$value = new Value('value');
+		self::assertTrue($value->isEmpty([ValueTest::class, __FUNCTION__]));
 	}
 	
 	/**
 	 * @flag a
 	 */
-	public function test_getValue_Return_Value()
+	public function test_getValue_AnnotationWithValue_ReturnValue()
 	{
 		self::assertEquals('a', Value::getValue([ValueTest::class, __FUNCTION__], 'flag'));
 	}
@@ -57,8 +95,8 @@ class ValueTest extends \PHPUnit\Framework\TestCase
 	/**
 	 * @flag
 	 */
-	public function test_getValue_Return_Default()
+	public function test_getValue_EmptyAnnotation_ReturnDefault()
 	{
-		self::assertNull(Value::getValue([ValueTest::class, __FUNCTION__], 'flag'));
+		self::assertNull(Value::getValue([ValueTest::class, __FUNCTION__], 'flag', null));
 	}
 }
