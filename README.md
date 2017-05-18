@@ -1,3 +1,3 @@
 # Annotation
 
-[![Build Status](https://travis-ci.org/oktopost/Annotation.svg?branch=master)](https://travis-ci.org/unstable-cacao/Botanist)
+[![Build Status](https://travis-ci.org/oktopost/Annotation.svg?branch=master)](https://travis-ci.org/oktopost/Annotation)
