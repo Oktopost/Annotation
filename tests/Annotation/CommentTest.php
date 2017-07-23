@@ -9,6 +9,7 @@ class CommentTest extends \PHPUnit\Framework\TestCase
 	const METHOD_COMMENT = '/** Comment on method a */';
 	const STATIC_METHOD_COMMENT = '/** Comment on static method b */';
 	const PROPERTY_COMMENT = '/** @var Comment on property */';
+	const INTERFACE_COMMENT = '/** Comment on interface a */';
 	
 	
 	public function test_get_ByFunctionName()
@@ -80,6 +81,11 @@ class CommentTest extends \PHPUnit\Framework\TestCase
 		self::assertEquals(self::PROPERTY_COMMENT, Comment::get(new \ReflectionProperty('\Annotation\CommentTest_HelpClass', 'c')));
 	}
 	
+	public function test_get_ByInterfaceName()
+	{
+		self::assertEquals(self::INTERFACE_COMMENT, Comment::get(CommentTest_HelpInterface::class));
+	}
+	
 	/**
 	 * @expectedException \Exception
 	 */
@@ -108,5 +114,11 @@ class CommentTest extends \PHPUnit\Framework\TestCase
 		
 		/** Comment on static method b */
 		public static function b() {}
+	}
+	
+	/** Comment on interface a */
+	interface CommentTest_HelpInterface
+	{
+		
 	}
 }

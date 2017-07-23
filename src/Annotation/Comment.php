@@ -38,7 +38,7 @@ class Comment
 		{
 			return self::get(new \ReflectionClass($source));
 		}
-		else if (is_string($source) && class_exists($source))
+		else if (is_string($source) && (class_exists($source) || interface_exists($source)))
 		{
 			return self::get(new \ReflectionClass($source));
 		}
